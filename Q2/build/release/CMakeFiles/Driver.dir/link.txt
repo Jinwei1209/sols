@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/Driver.dir/Driver.cpp.o -o Driver  /usr/lib/gcc/x86_64-linux-gnu/9/libgomp.so -lpthread 
