@@ -1,4 +1,4 @@
-# Shared-Nearest-Neighbor-Based Clustering with Pre-defined Centroids (C++ implementation, Modified from https://github.com/liurui39660/SNNDPC.git)
+# Shared-Nearest-Neighbor-Based Clustering with Pre-defined Centroids (C++ implementation) modified from https://github.com/liurui39660/SNNDPC.git)
 
 1. `cmake -DCMAKE_BUILD_TYPE=Release -S . -B build/release`
 1. `cmake --build build/release --target Driver`
