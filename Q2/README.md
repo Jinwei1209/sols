@@ -1,4 +1,4 @@
-# Shared-Nearest-Neighbor-Based Clustering with pre-defined centroids
+# Shared-Nearest-Neighbor-Based Clustering with Pre-defined Centroids
 
 1. `cmake -DCMAKE_BUILD_TYPE=Release -S . -B build/release`
 1. `cmake --build build/release --target Driver`
