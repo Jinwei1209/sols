@@ -2,6 +2,7 @@
 
 #include "SNNwithCentroids_slow.hpp"
 #include "SNNwithCentroids_fast.hpp"
+#include "SNNrefine.hpp"
 #include "utils.hpp"
 
 using namespace std::chrono;
@@ -61,9 +62,34 @@ int main(int argc, char* argv[]) {
 		}
 		printf("Time Cost = %lldms\n", duration_cast<milliseconds>(high_resolution_clock::now() - time).count());
 
+		// For Dataset 3 and 6, correct with GMM model for cluster #2
+		// --------------------------------------------------------------------------------
+		// if (dataset_idx == 3 || dataset_idx == 6) {
+		sprintf(command, "python %s %d", SOLUTION_DIR"GMM_for_refinement.py", dataset[0] - '0');
+		system(command);
+		// }
+
+		// run SNNrefine after GMM on cluster #1
+		// --------------------------------------------------------------------------------
+		char* pathLabel = SOLUTION_DIR"temp/Assignment_wo_outliers.txt";
+		const auto fileLabel = fopen(pathLabel, "r");
+		for (int i = 0; i < n; i++)
+			fscanf(fileLabel, "%d\n", &label[i]);
+		fclose(fileLabel);
+		printf("\nRunning SNNrefine after GMM. \n");
+		const auto assignment = SNN_refine(k, n, d, nc, data, label, dataset_idx);
+		export_results_refine(assignment, n);
+		delete[] assignment;
+
+		// Save results after refinement
+		// --------------------------------------------------------------------------------
+		sprintf(command, "python %s %d %d", SOLUTION_DIR"plot_Q2_results.py", dataset[0] - '0', 1);
+		system(command);
+
 		// Save results
 		// --------------------------------------------------------------------------------
-		sprintf(command, "python %s %d", SOLUTION_DIR"plot_Q2_results.py", dataset[0] - '0');
+		sprintf(command, "python %s %d %d", SOLUTION_DIR"plot_Q2_results.py", dataset[0] - '0', 0);
 		system(command);
+
 	}
 }

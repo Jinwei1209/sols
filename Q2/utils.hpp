@@ -38,3 +38,12 @@ void export_results(int* centroid, int* assignment, int nc, int n) {
     fprintf(fileAssignment, "%d\n", assignment[i]);
   fclose(fileAssignment);
 }
+
+void export_results_refine(int* assignment, int n) {
+  // Export assignment
+  const auto pathAssignment = SOLUTION_DIR"temp/Assignment_refine.txt";
+  const auto fileAssignment = fopen(pathAssignment, "w");
+  for (int i = 0; i < n; i++)
+    fprintf(fileAssignment, "%d\n", assignment[i]);
+  fclose(fileAssignment);
+}

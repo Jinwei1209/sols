@@ -5,6 +5,7 @@ from sys import argv
 
 # read data
 dataset = argv[1]
+flag_refine = argv[2]
 with open('./data/Dataset_{}.tsv'.format(dataset)) as f:
     lines = f.readlines()
 rawdata = np.zeros((np.shape(lines)[0], 2)) 
@@ -14,8 +15,14 @@ for i in range(np.shape(lines)[0]):
     rawdata[i, 1] = float(tmp[1])
 
 # read clustering result
-with open('./temp/Assignment.txt') as f:
-    lines = f.readlines()
+if flag_refine == '0':
+    print('0')
+    with open('./temp/Assignment.txt') as f:
+        lines = f.readlines()
+else:
+    print('1')
+    with open('./temp/Assignment_refine.txt') as f:
+        lines = f.readlines()
 predictions = np.zeros(np.shape(lines)[0], int)
 npoints = predictions.shape[0]    
 for i in range(np.shape(lines)[0]):
@@ -45,4 +52,9 @@ for i in range(np.shape(lines)[0]):
 plt.scatter(rawdata[centroids_index, 0], rawdata[centroids_index, 1], s=20, color='r')
 plt.axis([0, 1, 0, 1])
 plt.show()
-plt.savefig('cluster_{}.png'.format(dataset), dpi=200)
+if flag_refine == '0':
+    print('0')
+    plt.savefig('./results/cluster_{}.png'.format(dataset), dpi=200)
+else:
+    print('1')
+    plt.savefig('./results/cluster_refine_{}.png'.format(dataset), dpi=200)
